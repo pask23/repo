@@ -3,7 +3,9 @@
     package="com.pask.thedarksider"
     android:versionCode="1"
     android:versionName="1.0" >
-
+	
+    <uses-permission android:name="android.permission.INTERNET" />
+    
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
@@ -37,6 +39,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pask.thedarksider.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.pask.thedarksider.WebViewActivity"
+            android:label="@string/title_activity_web_view" >
+        </activity>
+        <activity
+            android:name="com.pask.thedarksider.WVActivity"
+            android:label="@string/title_activity_wv" >
         </activity>
     </application>
 

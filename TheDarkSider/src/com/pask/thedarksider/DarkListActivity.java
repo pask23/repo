@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -46,6 +47,8 @@ public class DarkListActivity extends ActionBarActivity {
 	        // Do something in response to the click
 	    	final String item=(String) parent.getItemAtPosition(position);
 	    	Log.d("click list", item);
+	    	Intent intent = new Intent(getApplicationContext(), WVActivity.class);
+	    	startActivity(intent);
 	    }
 	};
 
