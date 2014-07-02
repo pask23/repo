@@ -20,10 +20,10 @@ public class DisplayMessageActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_message);
 
-		if (savedInstanceState == null) {
+		/*if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
+		}*/
 		
 		//Get the message from the intent
 		Intent intent = getIntent();
@@ -62,7 +62,7 @@ public class DisplayMessageActivity extends ActionBarActivity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
+	/*public static class PlaceholderFragment extends Fragment {
 
 		public PlaceholderFragment() {
 		}
@@ -74,6 +74,6 @@ public class DisplayMessageActivity extends ActionBarActivity {
 					container, false);
 			return rootView;
 		}
-	}
+	}*/
 
 }

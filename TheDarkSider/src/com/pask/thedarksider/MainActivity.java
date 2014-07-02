@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 public class MainActivity extends ActionBarActivity {
-	public final static String EXTRA_MESSAGE = "com.pask.TheDarkSider.MESSAGE";
+	public final static String EXTRA_MESSAGE = "com.pask.thedarksider.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
