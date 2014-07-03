@@ -32,8 +32,8 @@ public class DarkListActivity extends ActionBarActivity {
 		final ListView listView = (ListView) findViewById(R.id.listview);
 		
 		final ArrayList<String> list = new ArrayList<String>();
-		list.add("youjizz");
-		list.add("xnxx");
+		list.add("AAA");
+		list.add("BBB");
 		
 		final StableArrayAdapter adapter = new StableArrayAdapter(this, android.R.layout.simple_list_item_1, list);
 		
