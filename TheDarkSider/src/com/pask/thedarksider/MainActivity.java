@@ -5,20 +5,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
 	public final static String EXTRA_MESSAGE = "com.pask.thedarksider.MESSAGE";
+	TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        tv=(TextView) findViewById(R.id.magic_word);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -41,7 +46,8 @@ public class MainActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        
+    	int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
         }
@@ -59,9 +65,15 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            //View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        	View rootView = inflater.inflate(R.layout.activity_calculator, container, false);
             return rootView;
         }
+    }
+    
+    
+    public void onClick(View view){
+    	tv.setText("1");
     }
     
     
@@ -69,7 +81,8 @@ public class MainActivity extends ActionBarActivity {
     	Intent intent;
     	EditText magicWord = (EditText) findViewById(R.id.magic_word);
     	String message = magicWord.getText().toString();
-    	if(message.equals("stocazzo")){
+    	Log.d("v",message);
+    	if(message.equals("1")){
     		intent = new Intent(this, DarkListActivity.class);
     	}
     	else{ 
