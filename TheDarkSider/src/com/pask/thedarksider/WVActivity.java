@@ -44,8 +44,10 @@ public class WVActivity extends ActionBarActivity{
 		WebSettings setting = myWebView.getSettings();
 		setting.setJavaScriptEnabled(true);
 		setting.setLoadsImagesAutomatically(true);
+		String newUA= "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.4) Gecko/20100101 Firefox/4.0";		
+		setting.setUserAgentString(newUA);
 		myWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-		myWebView.loadUrl("http://www.lolasesso.com");
+		myWebView.loadUrl("http://www.google.com");
 	}
 	
 	//device back button to navigate backward
