@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MyActivity">
+
+   <TextView
+        android:id="@+id/topic"
+        android:text="url Image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <EditText
+        android:id="@+id/url"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topic"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/btnSend"
+        android:hint="inserisci url immagine"
+        android:text="http://www.solofestivita.it/amicizia/immagini_amicizia/amicizia6.jpg"/>
+    
+     <Button
+        android:id="@id/btnSend"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topic"
+        android:layout_alignParentRight="true"
+        android:text="ok"
+        android:onClick="onClick"
+        />
+
+    
+
+    <ImageView
+        android:id="@+id/result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnSend"/>
+
+
+
+
+</RelativeLayout>
