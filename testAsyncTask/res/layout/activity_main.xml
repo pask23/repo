@@ -32,8 +32,7 @@
         android:layout_below="@id/topic"
         android:layout_alignParentRight="true"
         android:text="ok"
-        android:onClick="onClick"
-        />
+        android:onClick="onClick"/>
 
     
 
