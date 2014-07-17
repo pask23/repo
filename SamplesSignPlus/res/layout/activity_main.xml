@@ -42,6 +42,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"/>
     
+   
+    
     <Button
         android:id="@+id/btn_sign_out"
         android:layout_width="fill_parent"

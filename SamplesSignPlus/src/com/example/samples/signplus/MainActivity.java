@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -46,6 +47,7 @@ public class MainActivity extends Activity implements OnClickListener,
 	private static final String DIALOG_ERROR = "dialog_error";
 	private static final String STATE_RESOLVING_ERROR = "resolving_error";
 	private static final int REQUEST_CODE_SIGN_IN = 1;
+	public static final String PREFS_NAME = "MyPrefsFile";
 
 	// Bool to track whether the app is already resolving an error
 	private boolean mResolvingError = false;
@@ -62,6 +64,8 @@ public class MainActivity extends Activity implements OnClickListener,
 	private TextView mTxtName;
 	private TextView mTxtMail;
 	private ImageView mImgProfile;
+
+	private boolean signed;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,10 +91,19 @@ public class MainActivity extends Activity implements OnClickListener,
 
 		mResolvingError = savedInstanceState != null
 				&& savedInstanceState.getBoolean(STATE_RESOLVING_ERROR, false);
+
+		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		signed = settings.getBoolean("isSigned", false);
+
 	}
 
 	protected void onStart() {
 		super.onStart();
+		if(signed){//già fatto signin quindi in precedenza mi sono solo sloggato con tasto logout o nell'onstop
+			mSignInButton.setColorScheme(SignInButton.COLOR_LIGHT);
+			signInWithGplus();
+		}
+
 		// if (!mResolvingError)
 		// mGoogleApiClient.connect();
 	}
@@ -99,6 +112,14 @@ public class MainActivity extends Activity implements OnClickListener,
 		if (mGoogleApiClient.isConnected()) {
 			mGoogleApiClient.disconnect();
 		}
+		// We need an Editor object to make preference changes.
+		// All objects are from android.context.Context
+		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putBoolean("isSigned", signed);
+
+		// Commit the edits!
+		editor.commit();
 		super.onStop();
 
 	}
@@ -124,7 +145,7 @@ public class MainActivity extends Activity implements OnClickListener,
 		int available = GooglePlayServicesUtil
 				.isGooglePlayServicesAvailable(this);
 		if (available != ConnectionResult.SUCCESS) {
-			showDialog(DIALOG_GET_GOOGLE_PLAY_SERVICES);
+			showErrorDialog(DIALOG_GET_GOOGLE_PLAY_SERVICES);
 			return;
 		}
 
@@ -176,7 +197,8 @@ public class MainActivity extends Activity implements OnClickListener,
 							Log.e("", "User access revoked!");
 
 							mGoogleApiClient = build_GoogleApiClient();
-
+							
+							signed = false;
 							// mGoogleApiClient.connect();
 							updateUI(false);
 						}
@@ -219,6 +241,7 @@ public class MainActivity extends Activity implements OnClickListener,
 		Log.d("", "connected");
 
 		getProfileInformation();
+		signed = true;
 		updateUI(true);
 	}
 
@@ -235,44 +258,45 @@ public class MainActivity extends Activity implements OnClickListener,
 				mTxtName.setText(name);
 
 				Toast.makeText(this, name, Toast.LENGTH_LONG).show();
-				
-				new LoadProfileImage(mImgProfile).execute(currentPerson.getImage().getUrl());
-				
-			}
-			else{
-				Toast.makeText(this, "person information is null", Toast.LENGTH_LONG).show();
+
+				new LoadProfileImage(mImgProfile).execute(currentPerson
+						.getImage().getUrl());
+
+			} else {
+				Toast.makeText(this, "person information is null",
+						Toast.LENGTH_LONG).show();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Background Async task to load user profile picture from url
 	 * */
 	private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
-	    ImageView bmImage;
-	 
-	    public LoadProfileImage(ImageView bmImage) {
-	        this.bmImage = bmImage;
-	    }
-	 
-	    protected Bitmap doInBackground(String... urls) {
-	        String urldisplay = urls[0];
-	        Bitmap mIcon11 = null;
-	        try {
-	            InputStream in = new java.net.URL(urldisplay).openStream();
-	            mIcon11 = BitmapFactory.decodeStream(in);
-	        } catch (Exception e) {
-	            Log.e("Error", e.getMessage());
-	            e.printStackTrace();
-	        }
-	        return mIcon11;
-	    }
-	 
-	    protected void onPostExecute(Bitmap result) {
-	        bmImage.setImageBitmap(result);
-	    }
+		ImageView bmImage;
+
+		public LoadProfileImage(ImageView bmImage) {
+			this.bmImage = bmImage;
+		}
+
+		protected Bitmap doInBackground(String... urls) {
+			String urldisplay = urls[0];
+			Bitmap mIcon11 = null;
+			try {
+				InputStream in = new java.net.URL(urldisplay).openStream();
+				mIcon11 = BitmapFactory.decodeStream(in);
+			} catch (Exception e) {
+				Log.e("Error", e.getMessage());
+				e.printStackTrace();
+			}
+			return mIcon11;
+		}
+
+		protected void onPostExecute(Bitmap result) {
+			bmImage.setImageBitmap(result);
+		}
 	}
 
 	@Override
